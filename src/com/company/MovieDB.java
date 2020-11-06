@@ -1,7 +1,10 @@
 package com.company;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Scanner;
 
 public class MovieDB {
 
@@ -35,7 +38,7 @@ public class MovieDB {
 
     public static void selectMenu() {
         int i = 0;
-        while (i==0) {
+        while (i == 0) {
             displayMenu();
 
             Scanner scan = new Scanner(System.in);
@@ -54,6 +57,9 @@ public class MovieDB {
                 case 4:
                     checkFilmsForActor();
                     break;
+                case 5:
+                    showCostOfFilm();
+                    break;
                 default:
                     i++;
                     System.out.println("Zły wybor");
@@ -61,12 +67,37 @@ public class MovieDB {
         }
     }
 
+    private static void showCostOfFilm() {
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Podaj tytul nowego filmu");
+        String title = scan.nextLine();
+
+        System.out.println("Podaj tbazowe zarobki");
+        int basePayment = scan.nextInt();
+
+        int sum = 0;
+
+        List<Actors> actors = new LinkedList<>();
+        for (Movie s : movieLibrary) {
+            if (s.getTitle().equals(title)) {
+                for (Actors actors1 : s.getActorsList()) {
+                    sum = sum + actors1.payment(basePayment);
+                }
+                sum = sum + s.getDirector().payment(basePayment);
+            }
+        }
+
+        System.out.println("koszt to " + sum);
+
+    }
+
     private static void displayMenu() {
         System.out.println("Menu\n" +
                 "1:dodaj film\n" +
                 "2:szukaj filmu po nazwie\n" +
                 "3:wypisz filmy z zakresu dat\n" +
-                "4:sprawdz w jakich fimach grał dany aktor\n"
+                "4:sprawdz w jakich fimach grał dany aktor\n" +
+                "5:sprawdz koszt filmu o nazwie:\n"
         );
     }
 

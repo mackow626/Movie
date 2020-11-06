@@ -13,7 +13,7 @@ public class Actors extends Person {
     }
 
     @Override
-    int payment(int base) {
+   public int payment(int base) {
         return base*2;
     }
 }
